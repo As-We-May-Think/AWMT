@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: #F6D9A6; }
+  a { -webkit-tap-highlight-color: transparent; }
+  .gbook { color:#7a3f14; text-decoration:none; border-bottom:1px solid rgba(122,63,20,.4); padding-bottom:1px; transition:opacity .2s ease; }
+  .gbook:hover { opacity:.6; }
+</style>
+</helmet>
+
+<!-- ===== Grainy warm gradient backdrop (fixed, full-viewport) ===== -->
+<div style="position:fixed;inset:0;z-index:0;background:
+    radial-gradient(ellipse 62% 55% at 52% 46%, #F4C88C 0%, rgba(244,200,140,0) 68%),
+    radial-gradient(ellipse 80% 70% at 88% 6%, #F6E77E 0%, rgba(246,231,126,0) 55%),
+    radial-gradient(ellipse 70% 60% at 10% 96%, #FCF6E4 0%, rgba(252,246,228,0) 60%),
+    linear-gradient(150deg, #FBF3D8 0%, #F6D6A0 46%, #FBEFC9 100%);"></div>
+<!-- grain overlay -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</svg>
+<div style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.18;mix-blend-mode:soft-light;filter:url(#grain);"></div>
+
+<div style="position:relative;z-index:2;font-family:'Instrument Sans',sans-serif;color:#3a2a17;overflow-x:hidden;">
+
+  <!-- ===== Header ===== -->
+  <header style="display:flex;justify-content:space-between;align-items:center;padding:26px clamp(24px,6vw,80px);">
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#4a3418;">As We May Think</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#a07b46;">Setting up shop</span>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section style="min-height:calc(88vh - 78px);display:flex;flex-direction:column;justify-content:center;padding:40px clamp(24px,6vw,80px) 60px;">
+    <div style="max-width:900px;">
+      <h1 style="margin:0;font-family:'Spectral',serif;font-weight:600;font-size:clamp(52px,10vw,120px);line-height:0.92;letter-spacing:-0.01em;text-transform:uppercase;color:#33240f;">As we may<br><span style="font-style:italic;font-weight:500;color:#b9772c;">think</span></h1>
+      <p style="margin:clamp(28px,4vw,44px) 0 0;font-family:'Spectral',serif;font-weight:500;font-size:clamp(22px,3vw,32px);line-height:1.28;color:#6b4a1f;letter-spacing:0.005em;">Strengthening collective knowledge</p>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;margin-top:clamp(48px,7vw,80px);">
+      <div style="max-width:520px;">
+        <p style="font-family:'Instrument Sans',sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.62;color:#43301b;margin:0 0 18px;">We're a new lab dedicated to building connective tissue across the disjointed digital commons. We're just setting up shop, so check back soon. We'll soon have a newsletter, and if you'd like to receive the first post, you can <a href="#" class="gbook">sign our guest book here</a>.</p>
+        <p style="font-family:'Instrument Sans',sans-serif;font-size:clamp(16px,1.7vw,19px);line-height:1.62;color:#43301b;margin:0;">In the meantime, you can learn a bit more about our first project, <span style="font-style:italic;font-family:'Spectral',serif;color:#33240f;">Tapestries</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tapestries ===== -->
+  <section style="padding:clamp(60px,8vw,110px) clamp(24px,6vw,80px) clamp(90px,10vw,130px);">
+    <div style="max-width:820px;margin:0 auto;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:#a07b46;margin-bottom:18px;">Our first project</div>
+      <h2 style="margin:0 0 clamp(28px,4vw,44px);font-family:'Spectral',serif;font-weight:600;font-size:clamp(38px,6vw,64px);line-height:1;letter-spacing:-0.01em;color:#33240f;">Tapestries</h2>
+
+      <p style="font-family:'Instrument Sans',sans-serif;font-size:clamp(17px,1.9vw,20px);line-height:1.66;color:#3a2a17;margin:0 0 24px;">Tapestries is a web application that allows you to create multi-linear assemblages of source material from around the web, or from your personal archives.</p>
+
+      <p style="font-family:'Instrument Sans',sans-serif;font-size:clamp(17px,1.9vw,20px);line-height:1.66;color:#3a2a17;margin:0 0 24px;">Think of a design program like Miro or Canva crossed with knowledge-organizing tools like Are.na and Zotero — integrated with the Internet Archive, Wikimedia and the best of the open access ecosystem (scholarly, museum, library etc.). It's a tool for weaving the commons together across its various rickety silos, with tools for saving and preserving what matters.</p>
+
+      <p style="font-family:'Instrument Sans',sans-serif;font-size:clamp(17px,1.9vw,20px);line-height:1.66;color:#3a2a17;margin:0;">Tapestries was first conceived by electronic publishing pioneer Bob Stein (inventor of the first commercial CD-ROMs, ebooks and digital film editions) as he was grappling with how to share his archives. It's imbued with decades of deep thinking about multimedia and networked information. It's raw, full of possibilities, not yet deeply honed for specific use cases. We invite you to start playing with it, and to get involved in guiding its future development.</p>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer style="padding:44px clamp(24px,6vw,80px) 56px;border-top:1px solid rgba(122,63,20,.18);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+    <div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:#4a3418;">As We May Think</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:14px;color:#8a6738;margin-top:8px;">Strengthening collective knowledge</div>
+    </div>
+    <a href="#" class="gbook" style="font-family:'Instrument Sans',sans-serif;font-weight:600;font-size:15px;">Sign the guest book →</a>
+  </footer>
+
+</div>
+
+<a href="index.dc.html" style="position:fixed;left:20px;bottom:20px;z-index:100;font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.03em;background:#33240f;color:#f7ecd6;padding:9px 16px;border-radius:100px;text-decoration:none;box-shadow:0 8px 24px rgba(80,50,10,.24);" style-hover="opacity:.85;">◂ Iterations</a>
+
+</x-dc>
+</body>
+</html>
