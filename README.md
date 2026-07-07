@@ -6,7 +6,7 @@ A foundational framework for building knowledge tools and digital commons, groun
 
 **As We May Think** is an organizational initiative exploring how we might build digital tools for knowledge, creativity, and collective thinking. We're inspired by Vannevar Bush's 1945 essay of the same name, which imagined machines that could work more like the human mind—associative, non-linear, deeply connective.
 
-This repository houses reference implementations and template systems for projects within this ecosystem, including foundational markup patterns, interaction models, and infrastructure for tools like **Tapestries** (a non-linear canvas-based publishing and knowledge platform).
+This repository is for the As We May Think webpage.
 
 ## Core Vision
 
@@ -51,11 +51,6 @@ cd AWMT
 # Edit files in your editor
 # Test locally by opening .html files in a browser
 ```
-
-## Projects in the Ecosystem
-
-- **[Tapestries](https://github.com/As-We-May-Think/tapestries)** — Non-linear canvas-based publishing and knowledge tool
-- **[Bring Your Brain](https://bringyourbrain.org/)** — Community learning and knowledge-sharing platform
 
 ## Contributing
 
