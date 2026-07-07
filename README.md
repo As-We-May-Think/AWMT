@@ -1,6 +1,6 @@
 # As We May Think
 
-A foundational framework for building knowledge tools and digital commons, grounded in Vannevar Bush's vision of technology that augments human thought and collaboration.
+A foundational rewilding of knowledge tools and digital commons.
 
 ## About
 
