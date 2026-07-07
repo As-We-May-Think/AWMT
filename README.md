@@ -84,7 +84,7 @@ We welcome contributions, questions, and collaborations. Here's how to get invol
 
 **As We May Think** is a collaborative effort. Key contributors include:
 
-- [Bob Stein](https://github.com/bstein) 
+- Bob Stein
 - [Ben Vershbow](https://github.com/bvershbow) 
 - [Jess Klein](https://github.com/iamjessklein)
 - [Dan Visel](https://github.com/danmcp) 
