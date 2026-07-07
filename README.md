@@ -19,9 +19,8 @@ This repository is for the As We May Think webpage.
 
 This repo contains:
 
-- **HTML Templates** (`*.html`, `*.dc.html`) — Base markup and reference implementations
+- **Homepage** (`index.html`, `index.dc.html`) — The As We May Think landing page
 - **Support Scripts** (`support.js`) — Shared functionality and utilities for AWMT projects
-- **Theme Variants** — Multiple visual and structural approaches (minimal, warm, sunrise, index)
 
 These are building blocks—feel free to fork, remix, and adapt them for your own knowledge tools and platforms.
 
@@ -29,13 +28,11 @@ These are building blocks—feel free to fork, remix, and adapt them for your ow
 
 ### View the Templates
 
-Open any of the HTML files in a browser to see the reference implementations:
+Open the homepage in a browser to see the reference implementation:
 
 ```bash
 # Open in your default browser
 open index.html
-# or
-open minimal.dc.html
 ```
 
 ### Use as a Starting Point

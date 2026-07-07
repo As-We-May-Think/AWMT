@@ -10,106 +10,213 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
-  body { background: #E9E8EF; }
+  body { background: #F6D9A6; }
   a { -webkit-tap-highlight-color: transparent; }
+  .gbook { color:#14110d; text-decoration:none; border-bottom:1px solid rgba(20,17,13,.5); padding-bottom:1px; transition:opacity .2s ease; }
+  .gbook:hover { opacity:.6; }
+
+  /* ===== Material Design filled text field ===== */
+  .md-tf { position:relative; display:block; background:rgba(255,255,255,.5); border-radius:8px 8px 0 0; transition:background .15s ease; }
+  .md-tf:hover { background:rgba(255,255,255,.64); }
+  .md-tf:focus-within { background:rgba(255,255,255,.7); }
+  .md-tf::before { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:#14110d; } /* resting active indicator (3:1) */
+  .md-tf::after  { content:""; position:absolute; left:0; right:0; bottom:0; height:2px; background:#14110d; transform:scaleX(0); transition:transform .18s ease; } /* focus active indicator */
+  .md-tf:focus-within::after { transform:scaleX(1); }
+  .md-input { width:100%; height:56px; border:0; outline:0; background:transparent; font-family:'Instrument Sans',sans-serif; font-size:16px; color:#14110d; padding:22px 16px 6px; border-radius:8px 8px 0 0; }
+  .md-label { position:absolute; left:16px; top:17px; font-family:'Instrument Sans',sans-serif; font-size:16px; color:#14110d; pointer-events:none; transform-origin:left top; transition:transform .15s ease, color .15s ease; }
+  .md-input:focus ~ .md-label,
+  .md-input:not(:placeholder-shown) ~ .md-label { transform:translateY(-12px) scale(.75); color:#14110d; }
+  .md-help { margin:8px 4px 20px; font-family:'Instrument Sans',sans-serif; font-size:13px; line-height:1.45; color:#14110d; text-align:left; }
+  .md-btn { display:block; width:100%; min-height:48px; border:0; border-radius:100px; background:#14110d; color:#f7ecd6; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:.02em; cursor:pointer; transition:opacity .2s ease, box-shadow .2s ease; }
+  .md-btn:hover { opacity:.92; box-shadow:0 6px 18px rgba(20,17,13,.3); }
+  .md-btn:focus-visible { outline:3px solid #14110d; outline-offset:3px; }
+  .md-btn[disabled] { cursor:default; }
+  .md-btn.is-loading { opacity:.8; cursor:progress; }
+  .md-error { margin:8px 4px 0; font-family:'Instrument Sans',sans-serif; font-size:13px; line-height:1.4; color:#8a1a10; text-align:left; }
+
+  /* ===== Submit success feedback ===== */
+  .visually-hidden { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  .signup-success { display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:10px 0; }
+  .signup-success .check-svg { width:52px; height:52px; }
+  .signup-success .check-svg circle { fill:none; stroke:#14110d; stroke-width:2; opacity:.25; }
+  .signup-success .check-svg path { fill:none; stroke:#14110d; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:40; stroke-dashoffset:0; }
+  .signup-success-text { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(19px,2.4vw,23px); line-height:1.4; color:#14110d; margin:0; }
+  .signup-success.show { animation:signupFadeUp .4s ease; }
+  .signup-success.show .check-svg path { animation:signupDrawCheck .55s .1s ease; }
+  @keyframes signupDrawCheck { from { stroke-dashoffset:40; } to { stroke-dashoffset:0; } }
+  @keyframes signupFadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) {
+    #signup-form { transition:none!important; }
+    .signup-success.show, .signup-success.show .check-svg path { animation:none; }
+  }
 </style>
 </helmet>
-<div style="min-height:100vh;background:#E9E8EF;font-family:'Hanken Grotesk',sans-serif;padding:clamp(48px,7vw,90px) clamp(24px,6vw,80px) 90px;">
 
-  <div style="max-width:1240px;margin:0 auto;">
+<!-- ===== Grainy warm gradient backdrop (fixed, full-viewport) ===== -->
+<div style="position:fixed;inset:0;z-index:0;background:
+    radial-gradient(ellipse 62% 55% at 52% 46%, #F4C88C 0%, rgba(244,200,140,0) 68%),
+    radial-gradient(ellipse 80% 70% at 88% 6%, #F6E77E 0%, rgba(246,231,126,0) 55%),
+    radial-gradient(ellipse 70% 60% at 10% 96%, #FCF6E4 0%, rgba(252,246,228,0) 60%),
+    linear-gradient(150deg, #FBF3D8 0%, #F6D6A0 46%, #FBEFC9 100%);"></div>
+<!-- grain overlay -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="1.4"/></feComponentTransfer></filter>
+</svg>
+<div style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.55;mix-blend-mode:overlay;filter:url(#grain);"></div>
 
-    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:clamp(48px,6vw,74px);">
-      <div style="font-family:'Hanken Grotesk',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.26em;font-size:12px;color:#6d6d79;margin-bottom:22px;">As We May Think · Homepage</div>
-      <h1 style="margin:0;font-family:'Spectral',serif;font-weight:600;font-size:clamp(38px,6vw,66px);line-height:1.04;letter-spacing:-0.01em;color:#1c1c22;">Visual iterations</h1>
-      <p style="margin:20px 0 0;max-width:580px;font-family:'Hanken Grotesk',sans-serif;font-size:clamp(16px,2vw,18px);line-height:1.6;color:#63636e;">Two treatments of the same homepage, held in black &amp; white for now — so we're comparing type, layout and hierarchy, not color. Open either for the full scrolling page.</p>
+<!-- ===== Centered single column ===== -->
+<div style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;text-align:center;font-family:'Instrument Sans',sans-serif;color:#14110d;padding:clamp(56px,10vh,120px) clamp(24px,6vw,40px) 100px;">
+
+  <div style="max-width:600px;width:100%;">
+
+    <h1 style="margin:0;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,3.4vw,30px);">
+      <svg viewBox="0 0 336 100" role="img" aria-label="As We May Think" style="width:clamp(168px,30vw,248px);height:auto;display:block;">
+        <g fill="#14110d" fill-rule="evenodd">
+          <path d="M28,10 L56,90 L0,90 Z M15,57 L41,57 L41,66 L15,66 Z"></path>
+          <polygon points="84,10 140,10 112,90"></polygon>
+          <polygon points="140,10 196,10 168,90"></polygon>
+          <polygon points="252,10 224,90 280,90"></polygon>
+          <polygon points="308,10 280,90 336,90"></polygon>
+        </g>
+      </svg>
+      <span style="font-family:'Jost',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.28em;text-indent:.28em;font-size:clamp(19px,3.6vw,32px);line-height:1;color:#14110d;">As we may think</span>
+    </h1>
+
+    <p style="margin:clamp(20px,3vw,30px) 0 clamp(44px,7vw,64px);font-family:'Jost',sans-serif;font-weight:300;text-transform:uppercase;letter-spacing:.24em;text-indent:.24em;font-size:clamp(10px,1.2vw,12px);color:rgba(20,17,13,.7);">Strengthening collective knowledge</p>
+
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(19px,2.4vw,23px);line-height:1.5;color:#14110d;text-align:left;margin:0 0 34px;">We're a new lab dedicated to building connective tissue across the disjointed digital commons. We're just setting up shop, so check back soon. We'll soon have a newsletter, and if you'd like to receive the first post, you can sign our guest book here.</p>
+
+    <!-- Email signup — Material filled field with submit feedback -->
+    <div id="signup-wrap" style="width:100%;max-width:380px;margin:0 auto 34px;">
+      <form id="signup-form" novalidate>
+        <div class="md-tf">
+          <input id="signup-email" class="md-input" type="email" name="email" placeholder=" " autocomplete="email" inputmode="email" spellcheck="false" aria-describedby="signup-help signup-error" />
+          <label class="md-label" for="signup-email">Email address</label>
+        </div>
+        <!-- honeypot: hidden from people, catches spam bots -->
+        <input type="text" name="_gotcha" id="signup-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+        <p id="signup-help" class="md-help">We'll only use this to send you the first newsletter post.</p>
+        <p id="signup-error" class="md-error" role="alert" style="display:none;"></p>
+        <button type="submit" id="signup-btn" class="md-btn">Subscribe</button>
+      </form>
+      <div id="signup-success" class="signup-success" aria-hidden="true" style="display:none;">
+        <svg class="check-svg" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"></circle><path d="M15 27 l7 7 l15 -15"></path></svg>
+        <p class="signup-success-text">You're on the list — thanks. We'll send the first post your way.</p>
+      </div>
     </div>
+    <span id="signup-sr" class="visually-hidden" role="status" aria-live="polite"></span>
 
-    <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:stretch;">
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(19px,2.4vw,23px);line-height:1.5;color:#14110d;text-align:left;margin:0 0 clamp(56px,9vw,88px);">In the meantime, you can learn a bit more about our first project, <span style="font-style:italic;font-family:'Cormorant Garamond',serif;font-weight:600;color:#14110d;">Tapestries</span>.</p>
 
-      <a href="warm.dc.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;width:400px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(30,28,45,.12);border:1px solid rgba(0,0,0,.06);transition:transform .25s ease, box-shadow .25s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 66px rgba(30,28,45,.2);">
-        <div style="position:relative;width:400px;height:252px;overflow:hidden;background:#F5F5F4;border-bottom:1px solid rgba(0,0,0,.08);">
-          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg, transparent 0 27px, rgba(20,20,20,0.08) 27px 28px), repeating-linear-gradient(90deg, transparent 0 27px, rgba(20,20,20,0.08) 27px 28px);"></div>
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 62% at 50% 50%, #F5F5F4 22%, rgba(245,245,244,0) 78%);"></div>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;">
-            <div style="font-family:'Spectral',serif;font-weight:600;font-size:36px;line-height:0.94;letter-spacing:0.01em;text-transform:uppercase;color:#161616;">As We May<br><span style="font-style:italic;font-weight:500;color:#a3a3a3;">think</span></div>
-            <div style="margin-top:14px;font-family:'Hanken Grotesk',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.22em;font-size:8px;color:#7b7b7b;">Strengthening collective knowledge</div>
-          </div>
-          <span style="position:absolute;top:14px;right:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:#26262c;color:#fff;padding:5px 11px;border-radius:100px;box-shadow:0 4px 14px rgba(0,0,0,.25);">Current pick</span>
-        </div>
-        <div style="padding:24px 26px 28px;display:flex;flex-direction:column;flex:1;">
-          <div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;padding:6px 12px;border-radius:100px;background:#f2f1f6;border:1px solid rgba(0,0,0,.06);width:max-content;">
-            <span style="font-family:'Spectral',serif;font-size:15px;line-height:1;color:#1a1a1a;">Aa</span>
-            <span style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a8a92;">Spectral · Hanken Grotesk</span>
-          </div>
-          <h3 style="margin:0 0 8px;font-family:'Spectral',serif;font-weight:600;font-size:24px;color:#1c1c22;">Woven serif</h3>
-          <p style="margin:0 0 20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.6;color:#63636e;flex:1;">High-contrast serif, centered mark, projects paired as cards.</p>
-          <span style="font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px;color:#1c1c22;">Open homepage →</span>
-        </div>
-      </a>
+    <div style="width:44px;height:1px;background:rgba(20,17,13,.32);margin:0 auto clamp(40px,6vw,56px);"></div>
 
-      <a href="minimal.dc.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;width:400px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(30,28,45,.12);border:1px solid rgba(0,0,0,.06);transition:transform .25s ease, box-shadow .25s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 66px rgba(30,28,45,.2);">
-        <div style="position:relative;width:400px;height:252px;overflow:hidden;background:#F7F7F7;border-bottom:1px solid rgba(0,0,0,.08);">
-          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg, transparent 0 27px, rgba(20,20,20,0.06) 27px 28px), repeating-linear-gradient(90deg, transparent 0 27px, rgba(20,20,20,0.07) 27px 28px);"></div>
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 74% 64% at 40% 50%, #F7F7F7 20%, rgba(247,247,247,0) 78%);"></div>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:26px;">
-            <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;line-height:0.94;letter-spacing:-0.02em;text-transform:uppercase;color:#161616;">As we may<br><span style="color:#a3a3a3;">think</span></div>
-            <div style="margin-top:12px;font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:500;color:#7b7b7b;">Strengthening collective knowledge</div>
-          </div>
-        </div>
-        <div style="padding:24px 26px 28px;display:flex;flex-direction:column;flex:1;">
-          <div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;padding:6px 12px;border-radius:100px;background:#f2f1f6;border:1px solid rgba(0,0,0,.06);width:max-content;">
-            <span style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;line-height:1;color:#1a1a1a;">Aa</span>
-            <span style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a8a92;">Space Grotesk · Instrument Sans</span>
-          </div>
-          <h3 style="margin:0 0 8px;font-family:'Spectral',serif;font-weight:600;font-size:24px;color:#1c1c22;">Considered grotesk</h3>
-          <p style="margin:0 0 20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.6;color:#63636e;flex:1;">Left-aligned grotesk; the threads resolve into a knowledge-map of nodes.</p>
-          <span style="font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px;color:#1c1c22;">Open homepage →</span>
-        </div>
-      </a>
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(19px,2.4vw,23px);line-height:1.5;color:#14110d;text-align:left;margin:0 0 26px;"><a href="https://tapestries.media" class="gbook" target="_blank" rel="noopener noreferrer">Tapestries</a> is a web application that allows you to create multi-linear assemblages of source material from around the web, or from your personal archives.</p>
 
-      <a href="sunrise.dc.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;width:400px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(30,28,45,.12);border:1px solid rgba(0,0,0,.06);transition:transform .25s ease, box-shadow .25s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 66px rgba(30,28,45,.2);">
-        <div style="position:relative;width:400px;height:252px;overflow:hidden;border-bottom:1px solid rgba(0,0,0,.08);background:
-            radial-gradient(ellipse 62% 55% at 52% 46%, #F4C88C 0%, rgba(244,200,140,0) 68%),
-            radial-gradient(ellipse 80% 70% at 88% 6%, #F6E77E 0%, rgba(246,231,126,0) 55%),
-            radial-gradient(ellipse 70% 60% at 10% 96%, #FCF6E4 0%, rgba(252,246,228,0) 60%),
-            linear-gradient(150deg, #FBF3D8 0%, #F6D6A0 46%, #FBEFC9 100%);">
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px;">
-            <svg viewBox="0 0 336 100" role="img" aria-label="As We May Think" style="width:132px;height:auto;display:block;">
-              <g fill="#14110d" fill-rule="evenodd">
-                <path d="M28,10 L56,90 L0,90 Z M15,57 L41,57 L41,66 L15,66 Z"></path>
-                <polygon points="84,10 140,10 112,90"></polygon>
-                <polygon points="140,10 196,10 168,90"></polygon>
-                <polygon points="252,10 224,90 280,90"></polygon>
-                <polygon points="308,10 280,90 336,90"></polygon>
-              </g>
-            </svg>
-            <div style="margin-top:16px;font-family:'Jost',sans-serif;font-weight:500;font-size:15px;letter-spacing:.28em;text-indent:.28em;text-transform:uppercase;color:#14110d;">As we may think</div>
-            <div style="margin-top:12px;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(20,17,13,.6);">Strengthening collective knowledge</div>
-          </div>
-          <span style="position:absolute;top:14px;right:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:#14110d;color:#f7ecd6;padding:5px 11px;border-radius:100px;box-shadow:0 4px 14px rgba(20,17,13,.25);">New color</span>
-        </div>
-        <div style="padding:24px 26px 28px;display:flex;flex-direction:column;flex:1;">
-          <div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;padding:6px 12px;border-radius:100px;background:#f2f1f6;border:1px solid rgba(0,0,0,.06);width:max-content;">
-            <span style="font-family:'Jost',sans-serif;font-weight:500;font-size:15px;line-height:1;color:#1a1a1a;">Aa</span>
-            <span style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a8a92;">Jost · Instrument Sans</span>
-          </div>
-          <h3 style="margin:0 0 8px;font-family:'Spectral',serif;font-weight:600;font-size:24px;color:#1c1c22;">Warm sunrise</h3>
-          <p style="margin:0 0 20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.6;color:#63636e;flex:1;">Grainy amber gradient with the AWM triangle mark, "setting up shop" splash focused on the Tapestries intro.</p>
-          <span style="font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px;color:#1c1c22;">Open homepage →</span>
-        </div>
-      </a>
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(19px,2.4vw,23px);line-height:1.5;color:#14110d;text-align:left;margin:0 0 26px;">Think of a design program like Miro or Canva crossed with knowledge-organizing tools like Are.na and Zotero — integrated with the Internet Archive, Wikimedia and the best of the open access ecosystem (scholarly, museum, library etc.). It's a tool for weaving the commons together across its various rickety silos, with tools for saving and preserving what matters.</p>
 
-    </div>
-
-    <div style="text-align:center;margin-top:clamp(56px,7vw,84px);font-family:'Hanken Grotesk',sans-serif;font-size:13px;letter-spacing:.04em;color:#8a8996;">Previews are a snapshot — open any card for the live, animated page.</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(19px,2.4vw,23px);line-height:1.5;color:#14110d;text-align:left;margin:0;">Tapestries was first conceived by electronic publishing pioneer <a href="https://en.wikipedia.org/wiki/Robert_Stein_(computer_pioneer)" class="gbook" target="_blank" rel="noopener noreferrer">Bob Stein</a> (inventor of the first commercial CD-ROMs, ebooks and digital film editions) as he was grappling with how to share his archives. It's imbued with decades of deep thinking about multimedia and networked information. It's raw, full of possibilities, not yet deeply honed for specific use cases. We invite you to start playing with it, and to get involved in guiding its future development.</p>
 
   </div>
 
 </div>
+
 </x-dc>
+
+<script>
+(function(){
+  // === Newsletter signup ===
+  // SIGNUP_ENDPOINT is empty for now → the form runs in demo mode (simulated
+  // success) so the feedback is visible. Once a backend is chosen, set this to
+  // the endpoint URL and the form will POST { email, source } to it.
+  // 1. Create a form at https://formspree.io  2. paste its form ID below
+  //    (the part after /f/ in the endpoint, e.g. "xdorwklp").
+  //    Until it's set, the form runs in demo mode (simulated success).
+  var FORMSPREE_ID = '';
+  var SIGNUP_ENDPOINT = FORMSPREE_ID ? ('https://formspree.io/f/' + FORMSPREE_ID) : '';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function subscribe(email){
+    if(!SIGNUP_ENDPOINT){
+      return new Promise(function(resolve){ setTimeout(resolve, 650); }); // demo mode
+    }
+    // Form-encoded body + Accept:application/json => Formspree replies JSON with
+    // no CORS preflight. No credentials/secrets ever live in this page.
+    return fetch(SIGNUP_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({ email: email, _subject: 'New As We May Think signup', source: 'sunrise' }).toString()
+    }).then(function(r){
+      if(r.ok) return r;
+      return r.json().then(function(data){
+        var msg = (data && data.errors && data.errors.map(function(x){ return x.message; }).join(', ')) || 'Submission failed';
+        throw new Error(msg);
+      });
+    });
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    var form  = document.getElementById('signup-form');
+    var input = document.getElementById('signup-email');
+    var btn   = document.getElementById('signup-btn');
+    var hp    = document.getElementById('signup-hp');
+    var err   = document.getElementById('signup-error');
+    var sr    = document.getElementById('signup-sr');
+    var email = (input.value || '').trim();
+
+    function setError(msg){ err.textContent = msg; err.style.display = 'block'; input.setAttribute('aria-invalid', 'true'); }
+    function clearError(){ err.style.display = 'none'; err.textContent = ''; input.removeAttribute('aria-invalid'); }
+
+    if(!EMAIL_RE.test(email)){
+      setError('Please enter a valid email address.');
+      input.focus();
+      return;
+    }
+    clearError();
+
+    if(hp && hp.value){ finish(); return; } // honeypot tripped → silently succeed
+
+    btn.disabled = true; input.disabled = true;
+    btn.dataset.label = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.classList.add('is-loading');
+
+    subscribe(email).then(finish).catch(function(){
+      btn.disabled = false; input.disabled = false;
+      btn.textContent = btn.dataset.label || 'Subscribe';
+      btn.classList.remove('is-loading');
+      setError('Something went wrong — please try again.');
+    });
+
+    function finish(){
+      var success = document.getElementById('signup-success');
+      form.style.transition = 'opacity .3s ease';
+      form.style.opacity = '0';
+      setTimeout(function(){
+        form.style.display = 'none';
+        success.style.display = 'flex';
+        void success.offsetWidth; // force reflow so the CSS animation runs
+        success.classList.add('show');
+      }, 300);
+      sr.textContent = 'Thanks — you are subscribed. We will send you the first post.';
+    }
+  }
+
+  // The DC framework strips inline on* handlers, so listen via delegation on
+  // document (survives node re-compilation) and disable native validation by
+  // property (the novalidate attribute can be stripped too).
+  document.addEventListener('submit', function(e){
+    if(e.target && e.target.id === 'signup-form'){ handleSubmit(e); }
+  }, true);
+  function armForm(){ var f = document.getElementById('signup-form'); if(f) f.noValidate = true; }
+  armForm();
+  document.addEventListener('DOMContentLoaded', armForm);
+  window.addEventListener('load', armForm);
+})();
+</script>
 </body>
 </html>
