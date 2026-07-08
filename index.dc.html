@@ -128,33 +128,31 @@
 
 <script>
 (function(){
-  // === Newsletter signup ===
-  // SIGNUP_ENDPOINT is empty for now → the form runs in demo mode (simulated
-  // success) so the feedback is visible. Once a backend is chosen, set this to
-  // the endpoint URL and the form will POST { email, source } to it.
-  // 1. Create a form at https://formspree.io  2. paste its form ID below
-  //    (the part after /f/ in the endpoint, e.g. "xdorwklp").
-  //    Until it's set, the form runs in demo mode (simulated success).
-  var FORMSPREE_ID = '';
-  var SIGNUP_ENDPOINT = FORMSPREE_ID ? ('https://formspree.io/f/' + FORMSPREE_ID) : '';
+  // === Newsletter signup → Google Sheet ===
+  // Emails are POSTed to a Google Apps Script Web App that is bound to a private
+  // Google Sheet and appends one row per signup. Deploy the script in
+  // google-apps-script/Code.gs (follow google-apps-script/README.md), then paste
+  // the resulting "…/exec" Web App URL below. While it's empty the form runs in
+  // demo mode (simulated success) so the UI stays testable with no backend.
+  var SIGNUP_ENDPOINT = ''; // e.g. 'https://script.google.com/macros/s/AKfy…/exec'
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function subscribe(email){
     if(!SIGNUP_ENDPOINT){
       return new Promise(function(resolve){ setTimeout(resolve, 650); }); // demo mode
     }
-    // Form-encoded body + Accept:application/json => Formspree replies JSON with
-    // no CORS preflight. No credentials/secrets ever live in this page.
+    // A form-encoded body is a CORS "simple request", so the browser sends it
+    // with no preflight; Apps Script reads it as e.parameter.{email,source,ts}.
+    // We use mode:'no-cors' (fire-and-forget) because an Apps Script response
+    // carries no CORS headers — the row is still written, we just can't read the
+    // reply. The promise resolves once the request is sent and rejects only on a
+    // real network failure, which is exactly what the UI below expects. No
+    // credentials or API keys ever live in this page.
     return fetch(SIGNUP_ENDPOINT, {
       method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: new URLSearchParams({ email: email, _subject: 'New As We May Think signup', source: 'sunrise' }).toString()
-    }).then(function(r){
-      if(r.ok) return r;
-      return r.json().then(function(data){
-        var msg = (data && data.errors && data.errors.map(function(x){ return x.message; }).join(', ')) || 'Submission failed';
-        throw new Error(msg);
-      });
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({ email: email, source: 'homepage', ts: new Date().toISOString() }).toString()
     });
   }
 
