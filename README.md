@@ -19,8 +19,8 @@ This repository is for the As We May Think webpage.
 
 This repo contains:
 
-- **Homepage** (`index.html`, `index.dc.html`) — The As We May Think landing page
-- **Support Scripts** (`support.js`) — Shared functionality and utilities for AWMT projects
+- **Homepage** (`index.html`) — The As We May Think landing page: a single self-contained static page with an email signup
+- **Signup backend** (`google-apps-script/`) — A Google Apps Script Web App that records signups to a private Google Sheet
 
 These are building blocks—feel free to fork, remix, and adapt them for your own knowledge tools and platforms.
 
@@ -38,8 +38,8 @@ open index.html
 ### Use as a Starting Point
 
 1. **Fork this repository** or clone it locally
-2. **Adapt the HTML** to match your project's needs
-3. **Modify `support.js`** to add custom functionality
+2. **Adapt the HTML** in `index.html` to match your project's needs
+3. **Point the signup** at your own Google Sheet (see `google-apps-script/README.md`)
 4. **Build your tool** on top of this foundation
 
 ```bash

@@ -1,6 +1,6 @@
 # Newsletter signup → private Google Sheet
 
-The homepage form (`index.dc.html`) has **no backend of its own** — a static GitHub
+The homepage form (`index.html`) has **no backend of its own** — a static GitHub
 Pages site can't write to Google Sheets directly. Instead it POSTs each email to a
 **Google Apps Script Web App** that is bound to a private Sheet and appends a row.
 
@@ -34,7 +34,7 @@ Pages site can't write to Google Sheets directly. Instead it POSTs each email to
 5. **Copy the Web app URL** — it ends in `/exec`, e.g.
    `https://script.google.com/macros/s/AKfy…/exec`.
 
-6. **Wire it into the site.** Open `index.dc.html`, find:
+6. **Wire it into the site.** Open `index.html`, find:
    ```js
    var SIGNUP_ENDPOINT = '';
    ```
@@ -55,7 +55,7 @@ Editing `Code.gs` does **not** update the live endpoint by itself. Either:
 ## Optional hardening
 
 - **Shared token.** Set `SHARED_TOKEN` in `Code.gs` to a random string, and add a
-  matching `token` field to the form's POST body in `index.dc.html`. This blocks
+  matching `token` field to the form's POST body in `index.html`. This blocks
   drive-by bots hitting the raw `/exec` URL. It's obfuscation, not a true secret
   (the token ships in the public page), but it filters noise. The form already
   includes a hidden honeypot field and client + server email validation.
