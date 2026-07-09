@@ -1,14 +1,14 @@
 # As We May Think
 
-A foundational rewilding of knowledge tools and digital commons.
+Strengthening collective knowledge
 
 ## About
 
-**As We May Think** is an organizational initiative exploring how we might build digital tools for knowledge, creativity, and collective thinking. We're inspired by Vannevar Bush's 1945 essay of the same name, which imagined machines that could work more like the human mind—associative, non-linear, deeply connective.
+**As We May Think** is a new lab dedicated to building connective tissue across the disjointed digital commons. We're just setting up shop, so check back soon.
 
 This repository is for the As We May Think webpage.
 
-## Core Vision
+## Core perspectives
 
 - **Digital Commons**: Tools designed for shared knowledge and collective intelligence
 - **Non-Linear Thinking**: Support for associative, branching, weblike structures
@@ -81,10 +81,10 @@ We welcome contributions, questions, and collaborations. Here's how to get invol
 
 **As We May Think** is a collaborative effort. Key contributors include:
 
-- Bob Stein
-- [Ben Vershbow](https://github.com/bvershbow) 
+- [Dan Visel](https://github.com/dbvisel) 
 - [Jess Klein](https://github.com/iamjessklein)
-- [Dan Visel](https://github.com/danmcp) 
+- [Ben Vershbow](https://github.com/subsublibrary) 
+- Bob Stein
 
 ---
 
